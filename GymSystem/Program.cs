@@ -12,7 +12,7 @@ namespace GymSystem
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<DAL.Repo.Interfaces.IPlanRepo, DAL.Repo.Classes.PlanRepo>();
             builder.Services.AddDbContext<GymAppContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

@@ -12,5 +12,14 @@ namespace GymSystem.DAL.Models
         public int Capacity { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public Trainer trainer { get; set; } = default!;
+        public int trainerId { get; set; }
+
+
+        public Category category { get; set; } = default!;
+        public int categoryId { get; set; }
+
+        public ICollection<Booking> sessionmember { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace GymSystem.DAL.Models.Enums
         GeneralFitness = 1,
         Yoga,
         Boxing,
-        CrossFit
+        CrossFitness,
     }
 }

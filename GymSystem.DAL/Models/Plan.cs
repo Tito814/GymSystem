@@ -10,5 +10,7 @@ namespace GymSystem.Models
         public int DurationInDays { get; set; }
         public bool IsActive { get; set; }
 
+        public ICollection<MemberShip> members { get; set; }
+
     }
 }

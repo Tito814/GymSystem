@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace GymSystem.DAL.Models
 {
-    internal class Category : BaseEntity
+    public class Category : BaseEntity
     {
         public string CategoryName { get; set; }
+
+        public ICollection<Session> sessions { get; set; }
     }
 }

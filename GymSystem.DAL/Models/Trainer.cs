@@ -10,5 +10,7 @@ namespace GymSystem.DAL.Models
     public class Trainer : User
     {
         public Specialty Specialty { get; set; }
+
+        public ICollection<Session> sessions { get; set; }
     }
 }
