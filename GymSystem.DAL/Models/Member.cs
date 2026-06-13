@@ -9,7 +9,7 @@ namespace GymSystem.DAL.Models
 {
     public class Member : User
     {
-        public string photo { get; set; }
+        public string? photo { get; set; }
 
         public HealthRecord healthrecord { get; set; } = default!;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymSystem.DAL.Models
 {
-    public class User : BaseEntity
+    public abstract class User : BaseEntity
     {
         public string Name { get; set; } = default;
         public string Email { get; set; } = default;

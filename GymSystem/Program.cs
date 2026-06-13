@@ -1,3 +1,7 @@
+using GymSystem.BLL.Services.Classes;
+using GymSystem.BLL.Services.Interfaces;
+using GymSystem.DAL.Repo.Classes;
+using GymSystem.DAL.Repo.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymSystem
@@ -10,7 +14,11 @@ namespace GymSystem
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<DAL.Repo.Interfaces.IPlanRepo, DAL.Repo.Classes.PlanRepo>();
+            builder.Services.AddScoped<IMemberService, MemberServices>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IPlanService, PlanService>();
+            builder.Services.AddScoped<ITrainerService, TrainerServices>();
+            builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
             builder.Services.AddDbContext<GymAppContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

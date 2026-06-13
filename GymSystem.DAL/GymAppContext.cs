@@ -17,7 +17,6 @@ namespace GymSystem
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-        public DbSet<Plan> Plans { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -25,5 +24,6 @@ namespace GymSystem
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<MemberShip> MemberShips { get; set; }
         public DbSet<HealthRecord> HealthRecords { get; set; }
+        public DbSet<Plan> Plans { get; set; }
     }
 }

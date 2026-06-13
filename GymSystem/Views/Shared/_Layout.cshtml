@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- ^ Our main css file -->
     <link rel="stylesheet" href="~/css/Style.css" />
-    <title>Power fitness | Home</title>
+    <title>Power fitness | @ViewData["Title"]</title>
 </head>
 <body>
     <header>
@@ -34,10 +34,10 @@
                             <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-action="Index" asp-controller="Home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-action="Index" asp-controller="Members">Members</a>
+                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-action="Index" asp-controller="Member">Members</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-action="Index" asp-controller="Trainers">Trainers</a>
+                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-action="Index" asp-controller="Trainer">Trainers</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" asp-action="Index" asp-controller="Sessions">Sessions</a>

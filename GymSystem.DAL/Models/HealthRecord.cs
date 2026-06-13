@@ -8,10 +8,10 @@ namespace GymSystem.DAL.Models
 {
     public class HealthRecord : BaseEntity
     {
-        public int Height { get; set; }
-        public int Weight { get; set; }
+        public decimal Height { get; set; }
+        public decimal Weight { get; set; }
         public string BloodType { get; set; }
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
 
         public Member member { get; set; } = default!;
 
