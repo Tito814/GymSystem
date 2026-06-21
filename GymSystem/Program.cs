@@ -1,3 +1,4 @@
+using GymSystem.BLL.Profiles;
 using GymSystem.BLL.Services.Classes;
 using GymSystem.BLL.Services.Interfaces;
 using GymSystem.DAL.Repo.Classes;
@@ -21,6 +22,7 @@ namespace GymSystem
             builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
             builder.Services.AddDbContext<GymAppContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfiles()));
 
             var app = builder.Build();
 

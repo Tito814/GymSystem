@@ -9,7 +9,9 @@ namespace GymSystem.DAL.Repo.Interfaces
 {
     public interface IUnitOfWork
     {
+        public ISessionRepo SessionRepository { get; }
         IGenericRepo<TEntity> GetRepo<TEntity>() where TEntity : BaseEntity, new();
         Task<int> Completed(CancellationToken ct = default);
+
     }
 }

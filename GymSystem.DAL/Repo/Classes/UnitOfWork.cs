@@ -13,9 +13,12 @@ namespace GymSystem.DAL.Repo.Classes
         private readonly GymAppContext _context;
         private readonly Dictionary<string, object> _repos = new Dictionary<string, object>();
 
-        public UnitOfWork(GymAppContext context)
+        public ISessionRepo SessionRepository { get; }
+
+        public UnitOfWork(GymAppContext context, ISessionRepo sessionRepository)
         {
             _context = context;
+            SessionRepository = sessionRepository;
         }
         public IGenericRepo<TEntity> GetRepo<TEntity>() where TEntity : BaseEntity, new()
         {
@@ -25,7 +28,7 @@ namespace GymSystem.DAL.Repo.Classes
             // Check if the repo of this type is already created
             if (_repos.TryGetValue(TypeName, out object? repo))
                 return (IGenericRepo<TEntity>)repo;
-            
+
             else
             {
                 // Create the repo of this type and add it to the dictionary

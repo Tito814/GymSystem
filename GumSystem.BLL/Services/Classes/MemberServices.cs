@@ -1,4 +1,5 @@
-﻿using GymSystem.BLL.Services.Interfaces;
+﻿using AutoMapper;
+using GymSystem.BLL.Services.Interfaces;
 using GymSystem.BLL.ViewModels.MemberViewModel;
 using GymSystem.DAL.Models;
 using GymSystem.DAL.Repo.Interfaces;
@@ -14,14 +15,15 @@ namespace GymSystem.BLL.Services.Classes
     public class MemberServices : IMemberService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
 
-        public MemberServices(IUnitOfWork unitOfWork)
+        public MemberServices(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IUnitOfWork UnitOfWork { get; }
 
         public async Task<bool> CreateMemberAsync(CreateMemberVM member, CancellationToken ct = default)
         {
@@ -37,28 +39,10 @@ namespace GymSystem.BLL.Services.Classes
                 return false;
             }
 
-            var newMember = new Member()
-            {
-                Name = member.Name,
-                Email = member.Email,
-                Phone = member.Phone,
-                DOB = member.DateOfBirth,
-                Gender = member.Gender,
-                address = new Address()
-                {
-                    BuildingNumber = member.BuildingNumber,
-                    City = member.City,
-                    Street = member.Street
-                },
-                healthrecord = new HealthRecord()
-                {
-                    BloodType = member.HealthRecordViewModel.BloodType,
-                    Height = member.HealthRecordViewModel.Height,
-                    Weight = member.HealthRecordViewModel.Weight,
-                    Notes = member.HealthRecordViewModel.Note
-                }
+            // map from createmembervm to member
 
-            };
+            var newMember = _mapper.Map<Member>(member);
+            
             _unitOfWork.GetRepo<Member>().AddAsync(newMember);
             var result = await _unitOfWork.Completed(ct);
             return result > 0;
@@ -87,16 +71,8 @@ namespace GymSystem.BLL.Services.Classes
             List<MemberViewModel> memberViewModels = new List<MemberViewModel>();
             foreach (var item in members)
             {
-                var memberViewModel = new MemberViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Email = item.Email,
-                    Phone = item.Phone,
-                    Gender = item.Gender.ToString(),
-                    Photo = item.photo
+                var memberViewModel = _mapper.Map<MemberViewModel>(item);
 
-                };
                 memberViewModels.Add(memberViewModel);
             }
             return memberViewModels;
@@ -108,19 +84,7 @@ namespace GymSystem.BLL.Services.Classes
 
             if (member == null) return null;
 
-            var memberViewModel = new MemberViewModel()
-            {
-                Id = member.Id,
-                Name = member.Name,
-                Email = member.Email,
-                Phone = member.Phone,
-                Gender = member.Gender.ToString(),
-                Photo = member.photo,
-                DOB = member.DOB.ToString(),
-                Address = $"{member.address.BuildingNumber} - {member.address.Street} - {member.address.City}"
-
-
-            };
+            var memberViewModel = _mapper.Map<MemberViewModel>(member);
             // if there is active membership for the member, get the plan name and the start and end date of the membership
             var membership = await _unitOfWork.GetRepo<MemberShip>().FirstOrDefaultAsync(m => m.memberId == id && m.EndDate > DateTime.Now, ct: ct);
 
@@ -142,13 +106,7 @@ namespace GymSystem.BLL.Services.Classes
                 return null;
             else
 
-                return new HealthRecordViewModel()
-                {
-                    Height = healthRecord.Height,
-                    Weight = healthRecord.Weight,
-                    BloodType = healthRecord.BloodType,
-                    Note = healthRecord.Notes
-                };
+                return _mapper.Map<HealthRecordViewModel>(healthRecord);
 
 
         }
@@ -160,17 +118,7 @@ namespace GymSystem.BLL.Services.Classes
             if (member == null)
                 return null;
             else
-                return new MemberToUpdateVM()
-                {
-                    Name = member.Name,
-                    Photo = member.photo,
-                    Email = member.Email,
-                    Phone = member.Phone,
-                    BuildingNumber = member.address.BuildingNumber,
-                    City = member.address.City,
-                    Street = member.address.Street,
-
-                };
+                return _mapper.Map<MemberToUpdateVM>(member);
         }
 
         public async Task<bool> UpdateMemberAsync(int memberId, MemberToUpdateVM model, CancellationToken ct = default)
@@ -183,12 +131,7 @@ namespace GymSystem.BLL.Services.Classes
             if (EmailExist || PhoneExist)
                 return false;
 
-            member.Name = model.Name;
-            member.Email = model.Email;
-            member.Phone = model.Phone;
-            member.address.BuildingNumber = model.BuildingNumber;
-            member.address.City = model.City;
-            member.address.Street = model.Street;
+            _mapper.Map<Member>(model);
             member.UpdatedAt = DateTime.Now;
 
             _unitOfWork.GetRepo<Member>().UpdateAsync(member);
